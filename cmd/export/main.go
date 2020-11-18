@@ -2,6 +2,7 @@ package main
 
 import (
 	"encoding/json"
+	"flag"
 	"fmt"
 	"io/ioutil"
 	"log"
@@ -10,9 +11,20 @@ import (
 	"github.com/360EntSecGroup-Skylar/excelize"
 )
 
+type Config struct {
+	file string
+}
+
+var cfg Config
+
+func init() {
+	flag.StringVar(&cfg.file, "file", "test.xlsx", "xlsx file name")
+}
+
 func main() {
 	log.SetFlags(12)
-	f, err := excelize.OpenFile("12.xlsx")
+	flag.Parse()
+	f, err := excelize.OpenFile(cfg.file)
 	if err != nil {
 		println(err.Error())
 		return
